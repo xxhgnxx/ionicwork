@@ -1,3 +1,4 @@
+/// <reference path="../../typings/index.d.ts"/>
 import { Component, ViewChild } from '@angular/core';
 
 import { Events, MenuController, Nav, Platform } from 'ionic-angular';
@@ -64,7 +65,7 @@ export class ConferenceApp {
     this.storage.get('hasSeenTutorial')
       .then((hasSeenTutorial) => {
         if (hasSeenTutorial) {
-          this.rootPage = TabsPage;
+          this.rootPage = LoginPage;
         } else {
           this.rootPage = TutorialPage;
         }

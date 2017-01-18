@@ -23,6 +23,8 @@ import { SupportPage } from '../pages/support/support';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
+import { SocketService } from '../providers/socket-server';
+import { UserService } from '../providers/user-server';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,6 @@ import { UserData } from '../providers/user-data';
     TutorialPage,
     SupportPage
   ],
-  providers: [ConferenceData, UserData, Storage]
+  providers: [ConferenceData, UserData,SocketService,UserService, Storage]
 })
 export class AppModule { }

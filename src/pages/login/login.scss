@@ -8,11 +8,17 @@ page-user {
     text-align: center;
 
     img {
-      max-width: 150px;
+      max-width: 360px;
     }
   }
 
   .list {
     margin-bottom: 0;
   }
+
+  .input_l{
+    border: 1px solid black;
+  }
+
+
 }
