@@ -18,7 +18,7 @@
 				<ion-label stacked color="primary">昵称</ion-label>
 				<ion-input class="input_l" [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false"
 					autocapitalize="off" required>
-				</ion-input>
+					</ion-input>
 			</ion-item>
 			<p ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
 				请输入昵称
@@ -40,6 +40,8 @@
 			</ion-col>
 			<ion-col>
 				无需注册，首次登陆即为注册过程
+				<div>{{popmsg}}
+				</div>
 			</ion-col>
 		</ion-row>
 	</form>

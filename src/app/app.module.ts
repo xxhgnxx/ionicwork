@@ -20,6 +20,9 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
 
+// new
+import { GameRoom } from '../pages/gameroom/gameroom';
+
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
@@ -32,6 +35,7 @@ import { UserService } from '../providers/user-server';
     AboutPage,
     AccountPage,
     LoginPage,
+    GameRoom,
     MapPage,
     PopoverPage,
     SchedulePage,
@@ -53,6 +57,7 @@ import { UserService } from '../providers/user-server';
     AboutPage,
     AccountPage,
     LoginPage,
+    GameRoom,
     MapPage,
     PopoverPage,
     SchedulePage,

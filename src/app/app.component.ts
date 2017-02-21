@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
+import { GameRoom } from '../pages/gameroom/gameroom';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TutorialPage } from '../pages/tutorial/tutorial';
@@ -46,6 +47,7 @@ export class ConferenceApp {
     { title: 'Logout', component: TabsPage, icon: 'log-out', logsOut: true }
   ];
   loggedOutPages: PageInterface[] = [
+    { title: 'gameroom', component: GameRoom, icon: 'log-in' },
     { title: 'Login', component: LoginPage, icon: 'log-in' },
     { title: 'Support', component: SupportPage, icon: 'help' },
     { title: 'Signup', component: SignupPage, icon: 'person-add' }
@@ -65,7 +67,8 @@ export class ConferenceApp {
     this.storage.get('hasSeenTutorial')
       .then((hasSeenTutorial) => {
         if (hasSeenTutorial) {
-          this.rootPage = LoginPage;
+          // this.rootPage = LoginPage;
+          this.rootPage = GameRoom;
         } else {
           this.rootPage = TutorialPage;
         }
