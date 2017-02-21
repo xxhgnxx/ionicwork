@@ -53,8 +53,6 @@ export class LoginPage {
   }
 
   onSignup() {
-    this
-      .navCtrl
-      .push(SignupPage);
+    this.navCtrl.push(SignupPage);
   }
 }

@@ -11,6 +11,7 @@ import { EventEmitter } from '@angular/core';
 export class SocketService {
     private socket: SocketIOClient.Socket;
     @Output() loginResult: EventEmitter<any> = new EventEmitter();
+    @Output() rtcEmitter: EventEmitter<any> = new EventEmitter();
     constructor(public events: Events, public storage: Storage) { }
 
     /**
@@ -95,7 +96,7 @@ export class SocketService {
         let started = await this.start();
         return new Promise(resolve => {
             if (started) {
-                let logindata = new Data("login");
+                let logindata = new Data("login","");
                 logindata.name = name;
                 logindata.password = password;
                 this.send(logindata, this.callbackresout);
@@ -132,6 +133,14 @@ export class SocketService {
             cb(true);
         });
     }
+
+    /**
+   * 无反馈消息
+   */
+    public emit(data: Data) {
+        this.socket.emit('system', data);
+    }
+
 
     /**
     * 消息默认cb

@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>WebRTC的测试页面</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div>
+    <button (click)="Start()" id="startButton" [disabled]="step<0">1.socket.io连接</button>
+    <button (click)="setStream()" id="hangupButton" [disabled]="step<1">1.setStream(本地视频流绑定)</button>
+    <button (click)="Call()" id="callButton" [disabled]="step<2">2.Call(业务层)</button>
+    <button (click)="answer()" id="restartButton" [disabled]="step<2">3.ok(业务层)</button>
+    <button (click)="peerconnection()" id="restartButton" [disabled]="step<2">3.peerconnection</button>
+    <button (click)="setoffer()" id="hangupButton" [disabled]="step<4">4.setoffer</button>
+    <button (click)="setanswer()" id="hangupButton" [disabled]="step<5">4.setanswer</button>
+    <video #video id="localVideo" autoplay ></video>
+    <video #video2 id="remoteVideo" autoplay></video>
+  </div>
+</ion-content>

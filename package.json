@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "1.0.0",
+    "@types/webrtc": "0.0.20",
     "typescript": "^2.1.5"
   }
 }

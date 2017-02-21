@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { GameRoom } from '../pages/gameroom/gameroom';
+import { WebrtcComponent } from '../pages/webrtc/webrtc.component';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TutorialPage } from '../pages/tutorial/tutorial';
@@ -23,6 +24,7 @@ export interface PageInterface {
   logsOut?: boolean;
   index?: number;
 }
+declare var cordova: any;
 
 @Component({
   templateUrl: 'app.template.html'
@@ -49,6 +51,7 @@ export class ConferenceApp {
   loggedOutPages: PageInterface[] = [
     { title: 'gameroom', component: GameRoom, icon: 'log-in' },
     { title: 'Login', component: LoginPage, icon: 'log-in' },
+    { title: 'webrtc', component: WebrtcComponent, icon: 'log-in' },
     { title: 'Support', component: SupportPage, icon: 'help' },
     { title: 'Signup', component: SignupPage, icon: 'person-add' }
   ];
@@ -130,6 +133,9 @@ export class ConferenceApp {
     // Call any initial plugins when ready
     this.platform.ready().then(() => {
       Splashscreen.hide();
+       if ((<any>window).device.platform === 'iOS') {
+    cordova.plugins.iosrtc.registerGlobals();
+  }
     });
   }
 }

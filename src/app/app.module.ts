@@ -22,6 +22,7 @@ import { SupportPage } from '../pages/support/support';
 
 // new
 import { GameRoom } from '../pages/gameroom/gameroom';
+import { WebrtcComponent } from '../pages/webrtc/webrtc.component';
 
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
@@ -36,6 +37,7 @@ import { UserService } from '../providers/user-server';
     AccountPage,
     LoginPage,
     GameRoom,
+    WebrtcComponent,
     MapPage,
     PopoverPage,
     SchedulePage,
@@ -58,6 +60,7 @@ import { UserService } from '../providers/user-server';
     AccountPage,
     LoginPage,
     GameRoom,
+    WebrtcComponent,
     MapPage,
     PopoverPage,
     SchedulePage,
