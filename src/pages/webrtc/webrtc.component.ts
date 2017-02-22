@@ -33,7 +33,7 @@ export class WebrtcComponent {
   private async Start() {
     let ok = await this.socketService.start()
     if (ok) {
-      this.step = 1;
+      this.step = 2;
       console.log('初始化');
       this.socketService.rtcEmitter.subscribe((data: Data) => {
         console.log('收到数据包', data);
@@ -86,38 +86,38 @@ export class WebrtcComponent {
   }
 
 
-  private setStream() {
-    this.step = 2;
-    console.log('获取本地流');
-    navigator.mediaDevices.getUserMedia({
-      audio: true,
-      video: true
-    }).then((stream: MediaStream) => {
-      console.log(stream);
-      this.localStream = stream;
-      this.localVideo.nativeElement.src = URL.createObjectURL(this.localStream);
-    });
-  }
-
   // private setStream() {
-  //   this.step = 2;
+  //   this.step = 1;
   //   console.log('获取本地流');
-  //  var mediaOptions = { audio: false, video: true };
-  //   if (!navigator.getUserMedia) {
-  //     navigator.getUserMedia = (<any>navigator).getUserMedia || (<any>navigator).webkitGetUserMedia || (<any>navigator).mozGetUserMedia || (<any>navigator).msGetUserMedia;;
-  //   }
-  //   if (!navigator.getUserMedia) {
-  //     return alert('getUserMedia not supported in this browser.');
-  //   }
-  //   navigator.getUserMedia(mediaOptions, success, function (e) {
-  //     console.log(e);
+  //   navigator.mediaDevices.getUserMedia({
+  //     audio: true,
+  //     video: true
+  //   }).then((stream: MediaStream) => {
+  //     console.log(stream);
+  //     this.localStream = stream;
+  //     this.localVideo.nativeElement.src = URL.createObjectURL(this.localStream);
   //   });
-  //   function success(stream: any) {
-  //     let video = document.querySelector('#localVideo');
-  //     console.log(video);
-  //     (<any>video).src = window.URL.createObjectURL(stream);
-  //   }
   // }
+
+  private setStream() {
+    this.step = 1;
+    console.log('获取本地流');
+    var mediaOptions = { audio: false, video: true };
+    if (!navigator.getUserMedia) {
+      navigator.getUserMedia = (<any>navigator).getUserMedia || (<any>navigator).webkitGetUserMedia || (<any>navigator).mozGetUserMedia || (<any>navigator).msGetUserMedia;;
+    }
+    if (!navigator.getUserMedia) {
+      return alert('getUserMedia not supported in this browser.');
+    }
+    navigator.getUserMedia(mediaOptions, success, function (e) {
+      console.log(e);
+    });
+    function success(stream: any) {
+      let video = document.querySelector('#localVideo');
+      console.log(video);
+      (<any>video).src = window.URL.createObjectURL(stream);
+    }
+  }
 
 
   private peerconnection() {
