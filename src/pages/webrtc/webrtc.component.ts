@@ -127,7 +127,7 @@ export class WebrtcComponent {
       this.step = 5;
     }
 
-    this.pc = new RTCPeerConnection(this.iceServer);
+    this.pc = new (<any>window).RTCPeerConnection(this.iceServer);
     console.log(this.pc);
     this.pc.onicecandidate = (evt: any) => {
       console.log('获取candidate');
