@@ -1,4 +1,3 @@
-/// <reference path="../../typings/index.d.ts"/>
 import { Component, ViewChild } from '@angular/core';
 
 import { Events, MenuController, Nav, Platform } from 'ionic-angular';
@@ -133,9 +132,9 @@ export class ConferenceApp {
     // Call any initial plugins when ready
     this.platform.ready().then(() => {
       Splashscreen.hide();
-  //      if ((<any>window).device.platform === 'iOS') {
-  //   cordova.plugins.iosrtc.registerGlobals();
-  // }
+       if ((<any>window).device.platform === 'iOS') {
+    cordova.plugins.iosrtc.registerGlobals();
+  }
     });
   }
 }

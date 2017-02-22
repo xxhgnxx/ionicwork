@@ -1,6 +1,3 @@
-/// <reference path="D:\GitHub\ionicwork\node_modules\@types\webrtc\index.d.ts" />
-
-
 import { NgForm } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
