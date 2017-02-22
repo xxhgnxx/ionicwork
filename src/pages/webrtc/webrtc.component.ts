@@ -33,24 +33,25 @@ export class WebrtcComponent {
   public ngOnInit() {
     // 123
   };
-  private Start() {
-    this.step = 1;
-    console.log('初始化');
-    this.socketService.rtcEmitter.subscribe((data: any) => {
-
-      if (data.type === 'desc') {
-        this.setdesc(data);
-        return;
-      }
-
-      if (data.type === 'candidate') {
-        this.setcandidate(data);
-        return;
-      }
-
-    });
-
-
+  private async Start() {
+    let ok = await this.socketService.start()
+    if (ok) {
+      this.step = 1;
+      console.log('初始化');
+      this.socketService.rtcEmitter.subscribe((data: Data) => {
+        console.log('收到数据包', data);
+        if (data.type === 'desc') {
+          this.setdesc(data.data);
+          return;
+        }
+        if (data.type === 'candidate') {
+          this.setcandidate(data.data);
+          return;
+        }
+      });
+    } else {
+      console.log('连接服务器失败');
+    }
   }
 
   public setdesc(desc: any) {
@@ -67,18 +68,12 @@ export class WebrtcComponent {
                   console.log('设置本地desc成功');
                   this.socketService.emit(new Data('desc', desc));
                 },
-                (err: any) => {
-                  console.log(err);
-                });
+                (err: any) => console.log(err));
             },
-            (err: any) => {
-              console.log(err);
-            });
+            (err: any) => console.log(err));
         };
       },
-      (err: any) => {
-        console.log(err);
-      });
+      (err: any) => console.log(err));
   }
 
 
@@ -128,12 +123,13 @@ export class WebrtcComponent {
   // }
 
 
-
-
-
-
-
   private peerconnection() {
+    if (!this.isanswer) {
+      this.step = 4;
+    } else {
+      this.step = 5;
+    }
+
     this.pc = new RTCPeerConnection(this.iceServer);
     console.log(this.pc);
     this.pc.onicecandidate = (evt: any) => {
@@ -154,11 +150,11 @@ export class WebrtcComponent {
 
   private Call() {
     this.isanswer = false;
-    this.step = 4;
+    this.step = 3;
   };
   private answer() {
     this.isanswer = true;
-    this.step = 4;
+    this.step = 3;
 
   };
 

@@ -69,7 +69,7 @@ export class ConferenceApp {
     // Check if the user has already seen the tutorial
     this.storage.get('hasSeenTutorial')
       .then((hasSeenTutorial) => {
-        if (hasSeenTutorial) {
+        if (1) {
           // this.rootPage = LoginPage;
           this.rootPage = GameRoom;
         } else {
@@ -133,9 +133,9 @@ export class ConferenceApp {
     // Call any initial plugins when ready
     this.platform.ready().then(() => {
       Splashscreen.hide();
-       if ((<any>window).device.platform === 'iOS') {
-    cordova.plugins.iosrtc.registerGlobals();
-  }
+  //      if ((<any>window).device.platform === 'iOS') {
+  //   cordova.plugins.iosrtc.registerGlobals();
+  // }
     });
   }
 }

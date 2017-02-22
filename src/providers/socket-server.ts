@@ -75,7 +75,16 @@ export class SocketService {
 
             case 'updata':
                 break;
-
+            case "candidate":
+                {
+                    this.rtcEmitter.emit(data);
+                    break;
+                }
+            case "desc":
+                {
+                    this.rtcEmitter.emit(data);
+                    break;
+                }
 
 
             default:
@@ -96,7 +105,7 @@ export class SocketService {
         let started = await this.start();
         return new Promise(resolve => {
             if (started) {
-                let logindata = new Data("login","");
+                let logindata = new Data("login", "");
                 logindata.name = name;
                 logindata.password = password;
                 this.send(logindata, this.callbackresout);
