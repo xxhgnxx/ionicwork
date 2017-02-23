@@ -43,6 +43,10 @@ export class WebrtcComponent {
   public ngOnInit() {
     // 123
   };
+  public testmsg() {
+    // 123
+    this.socketService.emit(new Data('test', '测试消息'));
+  };
   private async Start() {
     let ok = await this.socketService.start()
     if (ok) {

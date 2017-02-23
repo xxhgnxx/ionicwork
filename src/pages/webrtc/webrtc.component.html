@@ -14,6 +14,7 @@
     <button ion-button (click)="answer()" id="answerButton" [disabled]="step!=2">3.ok(业务层)</button>
     <button ion-button (click)="peerconnection()" id="peerconnectionButton" [disabled]="step!=3">4.peerconnection</button>
     <button ion-button (click)="setoffer()" id="setofferButton" [disabled]="step!=4">5.setoffer</button>
+    <button ion-button (click)="testmsg()" id="testmsgButton" [disabled]="step<2">测试消息</button>
   </div>
   <div>
     <video #video id="localVideo" autoplay muted></video>

@@ -67,6 +67,9 @@ export class SocketService {
             case 'loginSuccess':
                 this.loginResult.emit('认证成功');
                 break;
+            case 'test':
+                console.log('测试消息', data);
+                break;
 
             case 'Login_fail':
                 this.loginResult.emit('认证失败');
