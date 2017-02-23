@@ -23,7 +23,6 @@ export class WebrtcComponent {
         "username": "123",
         "credential": "123"
       }
-
     ]
   };
   private step = 0;
