@@ -69,8 +69,8 @@ export class WebrtcComponent {
   }
 
   public setdesc(desc: any) {
-    console.log('收到desc');
-    this.pc.setRemoteDescription(desc).then(
+    console.log('收到desc', desc);
+    this.pc.setRemoteDescription(new (<any>window).RTCSessionDescription(desc)).then(
       () => {
         console.log('设置远端desc成功');
         if (this.isanswer) {
@@ -184,7 +184,7 @@ export class WebrtcComponent {
         console.log('createOffer成功');
         this.pc.setLocalDescription(desc).then(
           () => {
-            console.log('设置本地desc成功');
+            console.log('设置本地desc成功', desc);
             this.socketService.emit(new Data('desc', desc));
           },
           (err: any) => {
