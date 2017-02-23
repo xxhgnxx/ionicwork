@@ -49,7 +49,7 @@ export class SocketService {
 
     public init() {
         this.socket.on('system', (data: Data) => {
-            console.log('收到数据包');
+            // console.log('收到数据包');
             this.system(data);
         })
     }
@@ -57,7 +57,7 @@ export class SocketService {
 
 
     public system(data: Data) {
-        console.log('%csystem', 'background: #93ADAA; color: #000', data);
+        // console.log('%csystem', 'background: #93ADAA; color: #000', data);
 
         // dataLoader(this.userService, this.theGameService, this.theMsgService, data);
 

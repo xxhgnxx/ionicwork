@@ -53,7 +53,7 @@ export class WebrtcComponent {
       this.step = 2;
       console.log('初始化');
       this.socketService.rtcEmitter.subscribe((data: Data) => {
-        console.log('收到数据包', data);
+        // console.log('收到数据包', data);
         if (data.type === 'desc') {
           this.setdesc(data.data);
           return;
@@ -82,19 +82,19 @@ export class WebrtcComponent {
                   console.log('设置本地desc成功');
                   this.socketService.emit(new Data('desc', desc));
                 },
-                (err: any) => console.log(err));
+                (err: any) => console.log('setLocalDesc错误', err));
             },
-            (err: any) => console.log(err));
+            (err: any) => console.log('createAnswer错误', err));
         };
       },
-      (err: any) => console.log(err));
+      (err: any) => console.log('setRemoteDesc错误', err));
   }
 
 
   public setcandidate(candidate: any) {
     this.pc.addIceCandidate(candidate).then(
       function () {
-        console.log('收到candidate', candidate);
+        // console.log('收到candidate', candidate);
       },
       function (err: any) {
         console.log(err);
@@ -149,10 +149,10 @@ export class WebrtcComponent {
     this.pc = new (<any>window).RTCPeerConnection(this.iceServer);
     console.log(this.pc);
     this.pc.onicecandidate = (evt: any) => {
-      console.log('获取candidate');
+      // console.log('获取candidate');
       if (evt.candidate) {
         this.socketService.emit(new Data('candidate', evt.candidate));
-        console.log('send icecandidate');
+        // console.log('send icecandidate');
       };
     };
     console.log('设置待发送stream', this.localStream);
@@ -188,12 +188,12 @@ export class WebrtcComponent {
             this.socketService.emit(new Data('desc', desc));
           },
           (err: any) => {
-            console.log(err);
+            console.log('setLocalDesc错误', err);
           }
         );
       },
       (err: any) => {
-        console.log(err);
+        console.log('createOffer错误', err);
       }
     );
 
