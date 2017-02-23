@@ -19,7 +19,6 @@ export class WebrtcComponent {
         // "url": "stun:stunserver.org"
       },
       {
-
         "url": "turn:hk.airir.com",
         "username": "123",
         "credential": "123"
