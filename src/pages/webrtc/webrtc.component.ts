@@ -11,12 +11,27 @@ import { SocketService } from '../../providers/socket-server';
 
 @Component({ selector: 'webrtc', templateUrl: 'webrtc.component.html' })
 export class WebrtcComponent {
-  private iceServer: any;
+  private iceServer = {
+    "iceServers": [
+      {
+        // "url": "stun:stun.l.google.com:19302"
+        "url": "stun:hk.airir.com"
+        // "url": "stun:stunserver.org"
+      },
+      {
+
+        "url": "turn:hk.airir.com",
+        "username": "123",
+        "credential": "123"
+      }
+
+    ]
+  };
   private step = 0;
   private socketisonline: boolean;
   private pc: any;
 
-  private localStream: MediaStream;
+  private localStream: any;
 
   private isanswer = true;
 
@@ -109,22 +124,24 @@ export class WebrtcComponent {
     if (!navigator.getUserMedia) {
       return alert('getUserMedia not supported in this browser.');
     }
-    navigator.getUserMedia(mediaOptions, success, function (e) {
+    navigator.getUserMedia(mediaOptions, (stream: any) => {
+      let video = document.querySelector('#localVideo');
+      console.log(stream);
+      this.localStream = stream;
+      (<any>video).src = window.URL.createObjectURL(stream);
+    }, function (e) {
       console.log(e);
     });
-    function success(stream: any) {
-      let video = document.querySelector('#localVideo');
-      console.log(video);
-      (<any>video).src = window.URL.createObjectURL(stream);
-    }
+
   }
 
 
   private peerconnection() {
-    if (!this.isanswer) {
-      this.step = 4;
-    } else {
+
+    if (this.isanswer) {
       this.step = 5;
+    } else {
+      this.step = 4;
     }
 
     this.pc = new (<any>window).RTCPeerConnection(this.iceServer);
@@ -141,8 +158,12 @@ export class WebrtcComponent {
     this.pc.addStream(this.localStream);
     this.pc.onaddstream = (e: any) => {
       console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx绑定远端流');
-      this.remoteVideo.nativeElement.src = URL.createObjectURL(e.stream);
+      let rvideo = document.querySelector('#remoteVideo');
+      (<any>rvideo).src = window.URL.createObjectURL(e.stream);
+
+      // this.remoteVideo.nativeElement.src = URL.createObjectURL(e.stream);
     };
+    console.log('当前步骤', this.step);
   }
 
   private Call() {
