@@ -8,7 +8,10 @@ import { Storage } from '@ionic/storage';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { GameRoom } from '../pages/gameroom/gameroom';
+import { PlayerlistComponent } from '../pages/playerlist/playerlist.component';
 import { WebrtcComponent } from '../pages/webrtc/webrtc.component';
+import { VoiceComponent } from '../pages/voice/voice.component';
+
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TutorialPage } from '../pages/tutorial/tutorial';
@@ -51,6 +54,7 @@ export class ConferenceApp {
   loggedOutPages: PageInterface[] = [
     { title: 'gameroom', component: GameRoom, icon: 'log-in' },
     { title: 'Login', component: LoginPage, icon: 'log-in' },
+    { title: 'playerlist', component: PlayerlistComponent, icon: 'log-in' },
     { title: 'webrtc', component: WebrtcComponent, icon: 'log-in' },
     { title: 'Support', component: SupportPage, icon: 'help' },
     { title: 'Signup', component: SignupPage, icon: 'person-add' }
@@ -71,7 +75,7 @@ export class ConferenceApp {
       .then((hasSeenTutorial) => {
         if (1) {
           // this.rootPage = LoginPage;
-          this.rootPage = GameRoom;
+          this.rootPage = TabsPage;
         } else {
           this.rootPage = TutorialPage;
         }
@@ -133,9 +137,9 @@ export class ConferenceApp {
     // Call any initial plugins when ready
     this.platform.ready().then(() => {
       Splashscreen.hide();
-       if ((<any>window).device.platform === 'iOS') {
-    cordova.plugins.iosrtc.registerGlobals();
-  }
+      if ((<any>window).device.platform === 'iOS') {
+        cordova.plugins.iosrtc.registerGlobals();
+      }
     });
   }
 }

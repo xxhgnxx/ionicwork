@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>视频通话</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div *ngIF="caller" *ngFor="let user of userService.hList.userList">
+    <button class="btn btn-warning" (click)="call(user)">{{user.name}}</button>
+  </div>
+  <div>
+    <video #video id="localVideo" autoplay muted></video>
+  </div>
+  <div>
+    <video #video2 id="remoteVideo" autoplay></video>
+  </div>
+
+  <div *ngIF="cancall" *ngFor="let user of userService.hList.userList">
+    {{cancall}}发来视频请求
+    <button class="btn btn-warning" (click)="answer(true)">同意</button>
+    <button class="btn btn-warning" (click)="answer(false)">挂断</button>
+  </div>
+
+</ion-content>

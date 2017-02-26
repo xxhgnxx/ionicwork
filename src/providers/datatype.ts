@@ -26,6 +26,12 @@ export class Data {
     key: string;
     name: string;
     password: string;
+    stream_l: any;
+    stream_r: any;
+    id_offer: string;
+    id_answer: string;
+    from_offer: boolean;
+    answer: boolean;
     constructor(public type: string, public data: any) { }
 }
 

@@ -34,6 +34,7 @@ export class LoginPage {
       this.submiting = false;
       if (result === '认证成功') {
         console.log('登陆成功');
+        this.userService.myname = name;
         this.userService.isLogin = true;
         this.navCtrl.push(TabsPage);
       } else {
@@ -48,9 +49,8 @@ export class LoginPage {
         console.log('认证失败');
       }
     });
-
-
   }
+
 
   onSignup() {
     this.navCtrl.push(SignupPage);

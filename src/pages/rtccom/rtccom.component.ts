@@ -10,37 +10,42 @@ import { UserData } from '../../providers/user-data';
 import { UserService } from '../../providers/user-server';
 import { SocketService } from '../../providers/socket-server';
 
-@Component({ selector: 'webrtc', templateUrl: 'webrtc.component.html' })
-export class WebrtcComponent {
+@Component({ selector: 'rtccom', templateUrl: 'rtccom.component.html' })
+export class RtcComponent {
   private iceServer = {
-    "iceServers": [
-      {
-        // "url": "stun:stun.l.google.com:19302"
-        "url": "stun:hk.airir.com"
-        // "url": "stun:stunserver.org"
-      },
-      {
-        "url": "turn:hk.airir.com",
-        "username": "123",
-        "credential": "123"
-      }
-    ]
+    "iceServers": [{ "url": "stun:hk.airir.com" },
+    {
+      "url": "turn:hk.airir.com",
+      "username": "123",
+      "credential": "123"
+    }]
   };
   private step = 0;
   private socketisonline: boolean;
   private pc: any;
   private rtcEmitter: EventEmitter<any>;
-
+  private myvalue = 0;
+  private t1t = 0;
+  private t2t = 0;
   private localStream: any;
-
+  private soundMeter: any;
+  private localaudio: any
+  private AudioContext = (<any>window).AudioContext || (<any>window).webkitAudioContext;
+  private audioContext = new AudioContext();
   private isanswer = true;
 
-  @ViewChild('video') private localVideo: any;
-  @ViewChild('video2') private remoteVideo: any;
+
 
   constructor(
     public socketService: SocketService, public userData: UserData, public userService: UserService
   ) {
+    // this.soundMeter = new SoundMeter(this.audioContext);
+    setInterval(() => {
+      // this.myvalue = this.soundMeter.instant;
+      this.t1t++;
+      console.log(this.t1t);
+    }, 1000);
+
     this.rtcEmitter = this.socketService.rtcEmitter.subscribe((data: Data) => {
       // console.log('收到数据包', data);
       if (data.type === 'desc') {
@@ -109,7 +114,7 @@ export class WebrtcComponent {
   private setStream() {
     this.step = 1;
     console.log('获取本地流');
-    var mediaOptions = { audio: true, video: true };
+    var mediaOptions = { audio: true, video: false };
     if (!navigator.getUserMedia) {
       navigator.getUserMedia = (<any>navigator).getUserMedia || (<any>navigator).webkitGetUserMedia || (<any>navigator).mozGetUserMedia || (<any>navigator).msGetUserMedia;;
     }
@@ -117,13 +122,21 @@ export class WebrtcComponent {
       return alert('getUserMedia not supported in this browser.');
     }
     navigator.getUserMedia(mediaOptions, (stream: any) => {
-      let video = document.querySelector('#localVideo');
+
       console.log(stream);
       this.localStream = stream;
-      (<any>video).src = window.URL.createObjectURL(stream);
-    }, function (e) {
-      console.log(e);
-    });
+      let audio = document.querySelector('#localaudio');
+
+      console.log("xxxxxxxxxxxxxx", audio);
+
+      (<any>audio).src = window.URL.createObjectURL(stream);
+
+
+      this.soundMeter.connectToSource(stream, (e: any) => console.log(e));
+    }, (e) => console.log(e));
+
+
+
 
   }
 
@@ -135,7 +148,6 @@ export class WebrtcComponent {
     } else {
       this.step = 4;
     }
-
     this.pc = new (<any>window).RTCPeerConnection(this.iceServer);
     console.log(this.pc);
     this.pc.onicecandidate = (evt: any) => {
@@ -191,7 +203,6 @@ export class WebrtcComponent {
         console.log('createOffer错误', err);
       }
     );
-
   };
 
   ngOnDestroy() {
@@ -200,8 +211,82 @@ export class WebrtcComponent {
     this.rtcEmitter.unsubscribe();
   }
 
+  test() {
+    setInterval(() => {
+      // this.myvalue = this.soundMeter.instant;
+      this.t2t++;
+      console.log(this.t2t);
+    }, 1000);
+    // console.log('test', document.querySelector('#localaudio'));
 
+    // this.setStream()
+    // this.peerconnection()
+
+
+
+  }
   private setanswer() {
     // todo
   };
+
+  ngAfterViewInit() {
+
+    console.log('ngAfterViewInit', document.querySelector('#localaudio'));
+
+
+  }
+
+}
+
+
+
+class SoundMeter {
+  public instant: any;
+  public clip: any;
+  public script: any;
+  public mic: any;
+  constructor(private context: AudioContext) {
+
+    this.instant = 0.0;
+    this.clip = 0.0;
+    this.script = this.context.createScriptProcessor(2048, 1, 1);
+    this.script.onaudioprocess = (event: any) => {
+      var input = event.inputBuffer.getChannelData(0);
+      var i;
+      var sum = 0.0;
+      var clipcount = 0;
+      for (i = 0; i < input.length; ++i) {
+        sum += input[i] * input[i];
+        if (Math.abs(input[i]) > 0.99) {
+          clipcount += 1;
+        }
+      }
+      this.instant = Math.sqrt(sum / input.length);
+      this.clip = clipcount / input.length;
+    };
+
+  }
+  connectToSource(stream: any, callback: Function) {
+    console.log('SoundMeter connecting');
+    try {
+      this.mic = this.context.createMediaStreamSource(stream);
+      this.mic.connect(this.script);
+      // necessary to make sample run, but should not be.
+      this.script.connect(this.context.destination);
+      if (typeof callback !== 'undefined') {
+        callback(null);
+      }
+    } catch (e) {
+      console.error(e);
+      if (typeof callback !== 'undefined') {
+        callback(e);
+      }
+    }
+  }
+
+  stop() {
+    this.mic.disconnect();
+    this.script.disconnect();
+  }
+
 }

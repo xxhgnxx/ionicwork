@@ -1,6 +1,8 @@
+import { UserService } from './user-server';
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Data } from './datatype'
+import { dataLoader } from './data';
 import { idgen } from './datatype'
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
@@ -9,11 +11,17 @@ import { EventEmitter } from '@angular/core';
 
 @Injectable()
 export class SocketService {
-    private socket: SocketIOClient.Socket;
+    private testmsglist = new Array();
+    private ttt = 0;
+    public socket: SocketIOClient.Socket;
     @Output() loginResult: EventEmitter<any> = new EventEmitter();
+    @Output() videcall: EventEmitter<any> = new EventEmitter();
     @Output() rtcEmitter: EventEmitter<any> = new EventEmitter();
-    constructor(public events: Events, public storage: Storage) { }
-
+    constructor(public events: Events, public storage: Storage, public userService: UserService, ) {
+        this.start();
+    }
+    theGameService: any;
+    theMsgService: any;
     /**
    * 初始化过程
    */
@@ -26,14 +34,14 @@ export class SocketService {
 
         } else {
 
-            // this.socket = io.connect('192.168.1.14:81', { reconnection: false });
+            this.socket = io.connect('192.168.1.14:81', { reconnection: false });
             // this.socket = io.connect('127.0.0.1:81', {reconnection: false}); this.socket
-            this.socket = io.connect('hk.airir.com:81', { reconnection: false });
+            // this.socket = io.connect('hk.airir.com:81', { reconnection: false });
             return new Promise(resolve => {
                 let tmptimer = setTimeout(() => {
-                    console.log(Date().toString().slice(15, 25), '连接服务器', '失败');
+                    console.log(Date().toString().slice(15, 25), '连接服务器', '失败,重试');
                     this.socket.removeListener('ok');
-                    resolve(false);
+                    this.socket = io.connect('192.168.1.14:81', { reconnection: false });
                 }, 1000);
                 this.socket.once('ok', () => {
                     console.log(Date().toString().slice(15, 25), '连接服务器', '成功', this.socket.id);
@@ -49,9 +57,23 @@ export class SocketService {
 
     public init() {
         this.socket.on('system', (data: Data) => {
-            // console.log('收到数据包');
+            console.log('收到数据包', data);
             this.system(data);
         })
+    }
+
+
+    public call(id: string): Promise<any> {
+        return new Promise(resolve => {
+            this.socket.emit('system', new Data('call', id));
+            this.socket.once('answer', (data: Data) => {
+                resolve(data.answer);
+            });
+        });
+    }
+
+    public answer(res: boolean) {
+        this.socket.emit('system', new Data('answer', res));
     }
 
 
@@ -59,7 +81,7 @@ export class SocketService {
     public system(data: Data) {
         // console.log('%csystem', 'background: #93ADAA; color: #000', data);
 
-        // dataLoader(this.userService, this.theGameService, this.theMsgService, data);
+        dataLoader(this.userService, this.theGameService, this.theMsgService, data);
 
         switch (data.type) {
 
@@ -78,6 +100,10 @@ export class SocketService {
 
             case 'updata':
                 break;
+            case 'call':
+                console.log("收到视频请求");
+
+                break;
             case "candidate":
                 {
                     this.rtcEmitter.emit(data);
@@ -86,6 +112,13 @@ export class SocketService {
             case "desc":
                 {
                     this.rtcEmitter.emit(data);
+                    break;
+                }
+            case "testMsg":
+                {
+                    console.log('testMsg', data);
+
+                    this.testmsglist.push(data);
                     break;
                 }
 
@@ -163,5 +196,7 @@ export class SocketService {
             console.log('断线!');
         }
     }
+
+
 
 }

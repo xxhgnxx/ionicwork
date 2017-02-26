@@ -1,16 +1,19 @@
 <ion-header>
-	<ion-navbar>
-		<button ion-button menuToggle>
+  <ion-navbar>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-		<ion-title>游戏房间</ion-title>
-	</ion-navbar>
+    <ion-title>test页</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content>
-	<div class="logo">
-		<img src="assets/img/loginpic.png" alt="Ionic logo">
-	</div>
+  {{ttt}}----server-----{{this.s.ttt}}
+  <button ion-button (click)="test()" id="testmsgButton">测试消息</button>
+
+
+  <rtccom *ngIf="ok"> </rtccom>
+
 
 
 </ion-content>

@@ -1,7 +1,6 @@
 //  本地用户列表更新服务 用于维护本地用户列表
 import { Injectable } from '@angular/core';
-import { User }  from './user';
-import { SocketSevice } from './socket.service';
+import { User } from './user';
 import { Data } from './data';
 
 
@@ -9,6 +8,7 @@ import { Data } from './data';
 export class UserService {
   hList = new Userlisthgn(); // 系统用户总表存储位置
   userList: Array<User>;
+  myname = 'x';
   // userLsit = getdate();
   yourself: User = new User('x');
   yourHead: string;

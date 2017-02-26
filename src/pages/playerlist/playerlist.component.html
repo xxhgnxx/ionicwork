@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>用户列表组件</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <img src="assets/img/loading.jpg">
+
+
+  <button ion-button (click)=logout()>退出登录</button>
+  <button ion-button (click)=changestate()>切换状态</button>
+  <div *ngFor="let user of userService.hList.userList">
+    <button ion-button (click)=kick(user)>{{user.name}}</button>
+  </div>
+
+</ion-content>

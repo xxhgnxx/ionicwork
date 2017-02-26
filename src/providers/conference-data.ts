@@ -61,6 +61,8 @@ export class ConferenceData {
       });
     });
 
+    console.log("testxxxxxxxxxxxxx", this.data);
+
     return this.data;
   }
 
@@ -87,6 +89,7 @@ export class ConferenceData {
         });
 
       });
+      console.log("xxxxxxxxxxxxxxxxx22222222", day);
 
       return day;
     });

@@ -23,6 +23,10 @@ import { SupportPage } from '../pages/support/support';
 // new
 import { GameRoom } from '../pages/gameroom/gameroom';
 import { WebrtcComponent } from '../pages/webrtc/webrtc.component';
+import { PlayerlistComponent } from '../pages/playerlist/playerlist.component';
+import { VoiceComponent } from '../pages/voice/voice.component';
+import { ChatComponent } from '../pages/chat/chat.component';
+import { RtcComponent } from '../pages/rtccom/rtccom.component';
 
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
@@ -38,6 +42,10 @@ import { UserService } from '../providers/user-server';
     LoginPage,
     GameRoom,
     WebrtcComponent,
+    RtcComponent,
+    PlayerlistComponent,
+    VoiceComponent,
+    ChatComponent,
     MapPage,
     PopoverPage,
     SchedulePage,
@@ -61,6 +69,10 @@ import { UserService } from '../providers/user-server';
     LoginPage,
     GameRoom,
     WebrtcComponent,
+    PlayerlistComponent,
+    VoiceComponent,
+    ChatComponent,
+    RtcComponent,
     MapPage,
     PopoverPage,
     SchedulePage,
@@ -73,6 +85,6 @@ import { UserService } from '../providers/user-server';
     TutorialPage,
     SupportPage
   ],
-  providers: [ConferenceData, UserData,SocketService,UserService, Storage]
+  providers: [ConferenceData, UserData, SocketService, UserService, Storage]
 })
 export class AppModule { }

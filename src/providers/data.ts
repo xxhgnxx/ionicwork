@@ -96,7 +96,7 @@ export class Msg {
 
 
 // 数据包处理  test
-export function dataLoader(userService: any, theGameService: any, theMsgService: any, dataAll: Data | MsgData) {
+export function dataLoader(userService: any, theGameService: any, theMsgService: any, dataAll: any) {
 
     let data = (<Data>dataAll);
     let msgdata = (<MsgData>dataAll);
