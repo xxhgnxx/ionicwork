@@ -9,7 +9,6 @@ import { AboutPage } from '../pages/about/about';
 import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
-import { MapPage } from '../pages/map/map';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
 import { SessionDetailPage } from '../pages/session-detail/session-detail';
@@ -49,7 +48,6 @@ import { WebrtcService } from '../providers/webrtc-server';
     VoiceComponent,
     ChatComponent,
     MyvedioComponent,
-    MapPage,
     PopoverPage,
     SchedulePage,
     ScheduleFilterPage,
@@ -77,7 +75,6 @@ import { WebrtcService } from '../providers/webrtc-server';
     VoiceComponent,
     ChatComponent,
     RtcComponent,
-    MapPage,
     PopoverPage,
     SchedulePage,
     ScheduleFilterPage,
