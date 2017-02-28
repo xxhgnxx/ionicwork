@@ -109,7 +109,7 @@ export function dataLoader(userService: any, theGameService: any, theMsgService:
         userService.yourself = tmp.yourself;
         userService.hList = tmp;
         //  todo 待修改！
-        console.log(userService.yourself);
+        console.log('你自己是', userService.yourself);
     }
 
 

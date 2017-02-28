@@ -17,7 +17,7 @@ export class SocketService {
     @Output() loginResult: EventEmitter<any> = new EventEmitter();
     @Output() videcall: EventEmitter<any> = new EventEmitter();
     @Output() rtcEmitter: EventEmitter<any> = new EventEmitter();
-    constructor(public events: Events, public storage: Storage, public userService: UserService, ) {
+    constructor(public events: Events, public storage: Storage, public userService: UserService) {
         this.start();
     }
     theGameService: any;
@@ -57,7 +57,7 @@ export class SocketService {
 
     public init() {
         this.socket.on('system', (data: Data) => {
-            console.log('收到数据包', data);
+            // console.log('收到数据包', data);
             this.system(data);
         })
     }
@@ -65,15 +65,28 @@ export class SocketService {
 
     public call(id: string): Promise<any> {
         return new Promise(resolve => {
-            this.socket.emit('system', new Data('call', id));
+            let data = new Data('call', id);
+            data.toWho = id;
+            data.fromWho = this.socket.id;
+            this.socket.emit('system', data);
             this.socket.once('answer', (data: Data) => {
-                resolve(data.answer);
+                console.log('收到对方回应', data);
+
+                resolve(data.data);
+                clearTimeout(tmptimer);
             });
+            let tmptimer = setTimeout(() => {
+                console.log('等待接通超时');
+                this.socket.removeListener('answer');
+                resolve(false);
+            }, 20000);
         });
     }
 
-    public answer(res: boolean) {
-        this.socket.emit('system', new Data('answer', res));
+    public answer(res: Data) {
+        res.fromWho = this.socket.id;
+
+        this.socket.emit('system', res);
     }
 
 
@@ -101,8 +114,8 @@ export class SocketService {
             case 'updata':
                 break;
             case 'call':
-                console.log("收到视频请求");
-
+                console.log("收到视频请求", data);
+                this.videcall.emit(data);
                 break;
             case "candidate":
                 {

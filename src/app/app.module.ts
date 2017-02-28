@@ -27,12 +27,14 @@ import { PlayerlistComponent } from '../pages/playerlist/playerlist.component';
 import { VoiceComponent } from '../pages/voice/voice.component';
 import { ChatComponent } from '../pages/chat/chat.component';
 import { RtcComponent } from '../pages/rtccom/rtccom.component';
+import { MyvedioComponent } from '../pages/myvedio/myvedio.component';
 
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
 import { SocketService } from '../providers/socket-server';
 import { UserService } from '../providers/user-server';
+import { WebrtcService } from '../providers/webrtc-server';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { UserService } from '../providers/user-server';
     PlayerlistComponent,
     VoiceComponent,
     ChatComponent,
+    MyvedioComponent,
     MapPage,
     PopoverPage,
     SchedulePage,
@@ -69,6 +72,7 @@ import { UserService } from '../providers/user-server';
     LoginPage,
     GameRoom,
     WebrtcComponent,
+    MyvedioComponent,
     PlayerlistComponent,
     VoiceComponent,
     ChatComponent,
@@ -85,6 +89,6 @@ import { UserService } from '../providers/user-server';
     TutorialPage,
     SupportPage
   ],
-  providers: [ConferenceData, UserData, SocketService, UserService, Storage]
+  providers: [ConferenceData, UserData, SocketService, WebrtcService, UserService, Storage]
 })
 export class AppModule { }

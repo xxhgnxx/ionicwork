@@ -9,6 +9,7 @@ import { SpeakerListPage } from '../speaker-list/speaker-list';
 import { WebrtcComponent } from '../webrtc/webrtc.component';
 import { VoiceComponent } from '../voice/voice.component';
 import { ChatComponent } from '../chat/chat.component';
+import { MyvedioComponent } from '../myvedio/myvedio.component';
 
 
 @Component({
@@ -18,8 +19,8 @@ export class TabsPage {
   // set the root pages for each tab
   tab1Root: any = SchedulePage;
   tab2Root: any = ChatComponent;
-  tab3Root: any = VoiceComponent;
-  tab4Root: any = WebrtcComponent;
+  tab3Root: any = WebrtcComponent;
+  tab4Root: any = MyvedioComponent;
   mySelectedIndex: number;
 
   constructor(navParams: NavParams) {

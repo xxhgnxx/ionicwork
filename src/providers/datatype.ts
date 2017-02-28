@@ -32,6 +32,9 @@ export class Data {
     id_answer: string;
     from_offer: boolean;
     answer: boolean;
+    toWho: any;
+    fromWho: any;
+
     constructor(public type: string, public data: any) { }
 }
 

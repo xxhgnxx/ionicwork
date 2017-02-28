@@ -11,6 +11,7 @@ export class User {
   fascist1: User;
   fascist2: User;
   fascist3: User;
+  videoFree = true;
   password: string;
   isLastPre: boolean = false;
   isLastPrm: boolean = false;

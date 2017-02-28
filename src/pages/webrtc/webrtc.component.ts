@@ -9,6 +9,7 @@ import { TabsPage } from '../tabs/tabs';
 import { UserData } from '../../providers/user-data';
 import { UserService } from '../../providers/user-server';
 import { SocketService } from '../../providers/socket-server';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({ selector: 'webrtc', templateUrl: 'webrtc.component.html' })
 export class WebrtcComponent {
@@ -39,7 +40,7 @@ export class WebrtcComponent {
   @ViewChild('video2') private remoteVideo: any;
 
   constructor(
-    public socketService: SocketService, public userData: UserData, public userService: UserService
+    public socketService: SocketService, public domSanitizer: DomSanitizer, public userData: UserData, public userService: UserService
   ) {
     this.rtcEmitter = this.socketService.rtcEmitter.subscribe((data: Data) => {
       // console.log('收到数据包', data);
@@ -139,7 +140,7 @@ export class WebrtcComponent {
     this.pc = new (<any>window).RTCPeerConnection(this.iceServer);
     console.log(this.pc);
     this.pc.onicecandidate = (evt: any) => {
-      // console.log('获取candidate');
+      console.log('获取candidate');
       if (evt.candidate) {
         this.socketService.emit(new Data('candidate', evt.candidate));
         // console.log('send icecandidate');
@@ -151,6 +152,7 @@ export class WebrtcComponent {
     this.pc.onaddstream = (e: any) => {
       console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx绑定远端流');
       let rvideo = document.querySelector('#remoteVideo');
+      // (<any>rvideo).src = this.domSanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(e.stream));
       (<any>rvideo).src = window.URL.createObjectURL(e.stream);
 
       // this.remoteVideo.nativeElement.src = URL.createObjectURL(e.stream);
