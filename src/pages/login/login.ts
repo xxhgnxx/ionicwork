@@ -17,7 +17,9 @@ export class LoginPage {
   } = {};
   submiting = false;
   popmsg = "111";
-  constructor(public navCtrl: NavController, public socketService: SocketService, public userData: UserData, public userService: UserService) { }
+  constructor(public navCtrl: NavController, public socketService: SocketService, public userData: UserData, public userService: UserService) {
+    this.socketService.start();
+  }
 
   onLogin(form: NgForm) {
     this.submiting = true;

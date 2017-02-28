@@ -18,7 +18,7 @@ export class SocketService {
     @Output() videcall: EventEmitter<any> = new EventEmitter();
     @Output() rtcEmitter: EventEmitter<any> = new EventEmitter();
     constructor(public events: Events, public storage: Storage, public userService: UserService) {
-        this.start();
+        // this.start();
     }
     theGameService: any;
     theMsgService: any;
